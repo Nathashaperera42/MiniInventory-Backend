@@ -1,0 +1,10 @@
+namespace MiniInventory.Application.DTOs.Stock;
+
+public class StockInCreateDto
+{
+    public int ItemId { get; set; }
+    public int SupplierId { get; set; }
+    public int Quantity { get; set; }
+    public decimal CostPrice { get; set; }
+    public DateTime? StockInDate { get; set; }
+}
