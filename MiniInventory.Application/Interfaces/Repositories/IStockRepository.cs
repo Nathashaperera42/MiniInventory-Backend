@@ -11,5 +11,6 @@ public interface IStockRepository
     Task<IReadOnlyList<StockBalanceDto>> GetStockBalanceAsync();
     Task<IReadOnlyList<StockBalanceDto>> GetLowStockAsync();
     Task<IReadOnlyList<StockInDto>> GetStockInHistoryAsync();
+    Task<IReadOnlyList<StockOutDto>> GetStockOutHistoryAsync();
     Task<int> SaveChangesAsync();
 }

@@ -104,6 +104,26 @@ public class StockRepository : IStockRepository
         }).ToList();
     }
 
+    public async Task<IReadOnlyList<StockOutDto>> GetStockOutHistoryAsync()
+    {
+        var records = await _context.StockOuts
+            .AsNoTracking()
+            .Include(s => s.Item)
+            .OrderByDescending(s => s.StockOutDate)
+            .ToListAsync();
+
+        return records.Select(s => new StockOutDto
+        {
+            StockOutId = s.StockOutId,
+            ItemId = s.ItemId,
+            ItemName = s.Item?.ItemName,
+            Quantity = s.Quantity,
+            Reason = s.Reason.ToString(),
+            StockOutDate = s.StockOutDate,
+            CreatedDate = s.CreatedDate
+        }).ToList();
+    }
+
     public async Task<int> SaveChangesAsync() => await _context.SaveChangesAsync();
 
     private static string ResolveStatus(int balance, int reorderLevel)

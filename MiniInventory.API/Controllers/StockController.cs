@@ -30,6 +30,10 @@ public class StockController : ControllerBase
     public async Task<IActionResult> StockInHistory()
         => Ok(await _service.GetStockInHistoryAsync());
 
+    [HttpGet("out")]
+    public async Task<IActionResult> StockOutHistory()
+        => Ok(await _service.GetStockOutHistoryAsync());
+
     [HttpGet("balance")]
     public async Task<IActionResult> Balance()
         => Ok(await _service.GetBalanceAsync());

@@ -89,4 +89,10 @@ public class StockService : IStockService
         var data = await _stockRepo.GetStockInHistoryAsync();
         return ApiResponse<IReadOnlyList<StockInDto>>.Ok(data);
     }
+
+    public async Task<ApiResponse<IReadOnlyList<StockOutDto>>> GetStockOutHistoryAsync()
+    {
+        var data = await _stockRepo.GetStockOutHistoryAsync();
+        return ApiResponse<IReadOnlyList<StockOutDto>>.Ok(data);
+    }
 }
