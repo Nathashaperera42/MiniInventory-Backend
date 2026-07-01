@@ -26,6 +26,10 @@ public class StockController : ControllerBase
         return result.Success ? Ok(result) : BadRequest(result);
     }
 
+    [HttpGet("in")]
+    public async Task<IActionResult> StockInHistory()
+        => Ok(await _service.GetStockInHistoryAsync());
+
     [HttpGet("balance")]
     public async Task<IActionResult> Balance()
         => Ok(await _service.GetBalanceAsync());

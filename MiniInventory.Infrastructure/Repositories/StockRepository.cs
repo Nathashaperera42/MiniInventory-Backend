@@ -81,6 +81,29 @@ public class StockRepository : IStockRepository
         return all.Where(b => b.StockStatus is "Low Stock" or "Out of Stock").ToList();
     }
 
+    public async Task<IReadOnlyList<StockInDto>> GetStockInHistoryAsync()
+    {
+        var records = await _context.StockIns
+            .AsNoTracking()
+            .Include(s => s.Item)
+            .Include(s => s.Supplier)
+            .OrderByDescending(s => s.StockInDate)
+            .ToListAsync();
+
+        return records.Select(s => new StockInDto
+        {
+            StockInId = s.StockInId,
+            ItemId = s.ItemId,
+            ItemName = s.Item?.ItemName,
+            SupplierId = s.SupplierId,
+            SupplierName = s.Supplier?.SupplierName,
+            Quantity = s.Quantity,
+            CostPrice = s.CostPrice,
+            StockInDate = s.StockInDate,
+            CreatedDate = s.CreatedDate
+        }).ToList();
+    }
+
     public async Task<int> SaveChangesAsync() => await _context.SaveChangesAsync();
 
     private static string ResolveStatus(int balance, int reorderLevel)
